@@ -14,13 +14,19 @@ public class LinkedListStack<T> implements Stack<T> {
 
     @Override
     public void push(T item) {
+        Node newfirst = new Node();
+        newfirst.item=item;
+        newfirst.next=first;
+        first=newfirst;
         // TODO: Create a node, link it to the old first node, and make it the new first node.
     }
 
     @Override
     public T pop() {
+        T dat = first.item;
+        first = first.next;
         // TODO: Save the first item's value, move first to first.next, and return the saved value.
-        return null;
+        return dat;
     }
 
     @Override

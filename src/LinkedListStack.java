@@ -18,6 +18,7 @@ public class LinkedListStack<T> implements Stack<T> {
         newfirst.item=item;
         newfirst.next=first;
         first=newfirst;
+        n++;
         // TODO: Create a node, link it to the old first node, and make it the new first node.
     }
 
@@ -25,6 +26,7 @@ public class LinkedListStack<T> implements Stack<T> {
     public T pop() {
         T dat = first.item;
         first = first.next;
+        n--;
         // TODO: Save the first item's value, move first to first.next, and return the saved value.
         return dat;
     }
@@ -32,13 +34,13 @@ public class LinkedListStack<T> implements Stack<T> {
     @Override
     public boolean isEmpty() {
         // TODO: Return true when the first node is null.
-        return false;
+        return first==null;
     }
 
     @Override
     public int size() {
         // TODO: Return the number of items currently in the stack.
-        return 0;
+        return n;
     }
 
     /**
@@ -48,7 +50,28 @@ public class LinkedListStack<T> implements Stack<T> {
     public static int evalRPN(String[] tokens) {
         // TODO: Use a LinkedListStack<Integer> to evaluate the tokens. For an operator,
         // pop the right operand first, then the left operand; apply the operator and push the result.
-        return 0;
+        if(tokens.length==0)
+            return 0;
+        LinkedListStack<Integer> numbers = new LinkedListStack<>();
+        for(String s:tokens){
+            if(!(s.equals("+")||s.equals("-")||s.equals("/")||s.equals("*"))){
+                int i= Integer.parseInt(s);
+                numbers.push(i);
+            }
+            else{
+                int j = numbers.pop();
+                int k = numbers.pop();
+                if(s.equals("+"))
+                    numbers.push(j+k);
+                else if(s.equals("-"))
+                    numbers.push(k-j);
+                else if(s.equals("*"))
+                    numbers.push(j*k);
+                else
+                    numbers.push(k/j);
+            }
+        }
+        return numbers.pop();
     }
 
     static void check(String label, Object actual, Object expected) {
